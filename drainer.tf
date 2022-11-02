@@ -88,12 +88,13 @@ resource "aws_cloudwatch_event_rule" "asg_node_drainer" {
 }
 EOF
 }
-
+/*
 data "github_release" "porter_node_drainer" {
   repository  = "porter-node-drainer"
   owner       = "porter-dev"
   retrieve_by = "latest"
 }
+*/
 
 resource "null_resource" "download_node_drainer" {
   // always download the node drainer
@@ -104,7 +105,7 @@ resource "null_resource" "download_node_drainer" {
   provisioner "local-exec" {
     command = <<CREATE
 mkdir -p ${path.module}/files
-curl -L https://github.com/porter-dev/porter-node-drainer/releases/download/${data.github_release.porter_node_drainer.release_tag}/porter_node_drainer_Linux_x86_64.zip -o ${path.module}/files/porter_node_drainer.zip
+curl -L https://github.com/porter-dev/porter-node-drainer/releases/download/${var.release_tag}/porter_node_drainer_Linux_x86_64.zip -o ${path.module}/files/porter_node_drainer.zip
 unzip ${path.module}/files/porter_node_drainer.zip -d ${path.module}/files
     CREATE
   }

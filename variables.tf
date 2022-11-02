@@ -29,3 +29,7 @@ variable "asg_arns" {
 variable "asg_names" {
     type = list(string)
 }
+
+variable "release_tag" {
+    type = string
+}
